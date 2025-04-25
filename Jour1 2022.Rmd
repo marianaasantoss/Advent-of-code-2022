@@ -1,0 +1,55 @@
+---
+title: "Jour 1 2022"
+output: html_document
+date: "2025-04-23"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+
+Part 1
+
+```{r}
+read_lines("input12022.txt") -> calories
+calories
+```
+
+```{r}
+calories |>
+  as.tibble() |>
+  mutate(group = cumsum(value == "")) |>
+  mutate(value = as.numeric(value)) |>    
+  group_by(group) |>                      
+  summarise(total = sum(value, na.rm = TRUE))
+```
+
+```{r}
+calories |>
+  as.tibble() |>
+  mutate(group = cumsum(value == "")) |>
+  mutate(value = as.numeric(value)) |>    
+  group_by(group) |>                      
+  summarise(total = sum(value, na.rm = TRUE)) |>
+  max()
+```
+
+
+Part 2
+```{r}
+calories |>
+  as.tibble() |>
+  mutate(group = cumsum(value == "")) |>
+  mutate(value = as.numeric(value)) |>    
+  group_by(group) |>                      
+  summarise(total = sum(value, na.rm = TRUE)) |>
+  arrange(desc(total))
+```
+
+```{r}
+67027+65333+64931
+```
+
+
