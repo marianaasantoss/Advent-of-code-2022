@@ -1,0 +1,180 @@
+---
+title: "Jour 3 2022"
+output: html_document
+date: "2025-04-23"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r}
+read_lines("input32022.txt") |>
+  as.tibble()-> rucksack
+rucksack
+```
+
+
+
+```{r}
+rucksack |>
+  mutate(mid = nchar(value),
+         mid2 = mid/2) |>
+  mutate(first_half = substr(value, 1, mid2),
+         second_half = str_sub(value, -mid2)) -> half
+half
+```
+
+```{r}
+half |>
+  mutate(lettres_communes = map2_chr(first_half, second_half, ~
+    paste(sort(intersect(strsplit(.x, "")[[1]], strsplit(.y, "")[[1]])), collapse = "")
+  )) -> half2
+half2
+```
+
+```{r}
+half2 |>
+  mutate(value = case_when(lettres_communes == "a" ~ "1",
+                           lettres_communes == "b" ~ "2",
+                           lettres_communes == "c" ~ "3",
+                           lettres_communes == "d" ~ "4",
+                           lettres_communes == "e" ~ "5",
+                           lettres_communes == "f" ~ "6",
+                           lettres_communes == "g" ~ "7",
+                           lettres_communes == "h" ~ "8",
+                           lettres_communes == "i" ~ "9",
+                           lettres_communes == "j" ~ "10",
+                           lettres_communes == "k" ~ "11",
+                           lettres_communes == "l" ~ "12",
+                           lettres_communes == "m" ~ "13",
+                           lettres_communes == "n" ~ "14",
+                           lettres_communes == "o" ~ "15",
+                           lettres_communes == "p" ~ "16",
+                           lettres_communes == "q" ~ "17",
+                           lettres_communes == "r" ~ "18",
+                           lettres_communes == "s" ~ "19",
+                           lettres_communes == "t" ~ "20",
+                           lettres_communes == "u" ~ "21",
+                           lettres_communes == "v" ~ "22",
+                           lettres_communes == "w" ~ "23",
+                           lettres_communes == "x" ~ "24",
+                           lettres_communes == "y" ~ "25",
+                           lettres_communes == "z" ~ "26",
+                           lettres_communes == "A" ~ "27",
+                           lettres_communes == "B" ~ "28",
+                           lettres_communes == "C" ~ "29",
+                           lettres_communes == "D" ~ "30",
+                           lettres_communes == "E" ~ "31",
+                           lettres_communes == "F" ~ "32",
+                           lettres_communes == "G" ~ "33",
+                           lettres_communes == "H" ~ "34",
+                           lettres_communes == "I" ~ "35",
+                           lettres_communes == "J" ~ "36",
+                           lettres_communes == "K" ~ "37",
+                           lettres_communes == "L" ~ "38",
+                           lettres_communes == "M" ~ "39",
+                           lettres_communes == "N" ~ "40",
+                           lettres_communes == "O" ~ "41",
+                           lettres_communes == "P" ~ "42",
+                           lettres_communes == "Q" ~ "43",
+                           lettres_communes == "R" ~ "44",
+                           lettres_communes == "S" ~ "45",
+                           lettres_communes == "T" ~ "46",
+                           lettres_communes == "U" ~ "47",
+                           lettres_communes == "V" ~ "48",
+                           lettres_communes == "W" ~ "49",
+                           lettres_communes == "X" ~ "50",
+                           lettres_communes == "Y" ~ "51",
+                           lettres_communes == "Z" ~ "52")) -> values
+values
+```
+
+```{r}
+as.numeric(values$value) |>
+  as.tibble() -> chiffres
+chiffres
+```
+
+```{r}
+chiffres |>
+  drop_na() |>
+  summarise(sum(value))
+```
+
+```{r}
+rucksack
+```
+
+
+```{r}
+rucksack |>
+  mutate(group_id = (row_number() - 1) %/% 3 + 1) |>
+  group_by(group_id) |>
+  summarise(
+    lettres_communes = reduce(strsplit(value, ""), intersect) %>% paste(collapse = ""))  |>
+  mutate(value = case_when(lettres_communes == "a" ~ "1",
+                           lettres_communes == "b" ~ "2",
+                           lettres_communes == "c" ~ "3",
+                           lettres_communes == "d" ~ "4",
+                           lettres_communes == "e" ~ "5",
+                           lettres_communes == "f" ~ "6",
+                           lettres_communes == "g" ~ "7",
+                           lettres_communes == "h" ~ "8",
+                           lettres_communes == "i" ~ "9",
+                           lettres_communes == "j" ~ "10",
+                           lettres_communes == "k" ~ "11",
+                           lettres_communes == "l" ~ "12",
+                           lettres_communes == "m" ~ "13",
+                           lettres_communes == "n" ~ "14",
+                           lettres_communes == "o" ~ "15",
+                           lettres_communes == "p" ~ "16",
+                           lettres_communes == "q" ~ "17",
+                           lettres_communes == "r" ~ "18",
+                           lettres_communes == "s" ~ "19",
+                           lettres_communes == "t" ~ "20",
+                           lettres_communes == "u" ~ "21",
+                           lettres_communes == "v" ~ "22",
+                           lettres_communes == "w" ~ "23",
+                           lettres_communes == "x" ~ "24",
+                           lettres_communes == "y" ~ "25",
+                           lettres_communes == "z" ~ "26",
+                           lettres_communes == "A" ~ "27",
+                           lettres_communes == "B" ~ "28",
+                           lettres_communes == "C" ~ "29",
+                           lettres_communes == "D" ~ "30",
+                           lettres_communes == "E" ~ "31",
+                           lettres_communes == "F" ~ "32",
+                           lettres_communes == "G" ~ "33",
+                           lettres_communes == "H" ~ "34",
+                           lettres_communes == "I" ~ "35",
+                           lettres_communes == "J" ~ "36",
+                           lettres_communes == "K" ~ "37",
+                           lettres_communes == "L" ~ "38",
+                           lettres_communes == "M" ~ "39",
+                           lettres_communes == "N" ~ "40",
+                           lettres_communes == "O" ~ "41",
+                           lettres_communes == "P" ~ "42",
+                           lettres_communes == "Q" ~ "43",
+                           lettres_communes == "R" ~ "44",
+                           lettres_communes == "S" ~ "45",
+                           lettres_communes == "T" ~ "46",
+                           lettres_communes == "U" ~ "47",
+                           lettres_communes == "V" ~ "48",
+                           lettres_communes == "W" ~ "49",
+                           lettres_communes == "X" ~ "50",
+                           lettres_communes == "Y" ~ "51",
+                           lettres_communes == "Z" ~ "52")) -> val
+val
+```
+
+
+```{r}
+as.numeric(val$value) |>
+  as.tibble() |>
+  drop_na() |>
+  summarise(sum(value))
+```
+
+
