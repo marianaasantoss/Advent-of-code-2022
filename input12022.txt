@@ -2245,5 +2245,4 @@
 9093
 4122
 1303
-5054
-</pre></body></html>Ztext/plainP_)https://adventofcode.com/2022/day/1/inputUUTF-8    ( : P g v ”** *!*M                           *S
+5054              *S
